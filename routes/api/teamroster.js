@@ -56,7 +56,7 @@ function OrganizeData(response)
 // @desc    Tests stats.nba.com endpoints
 // @access  Public
 router.get('/', (req, res) => {
-  axios.get('https://stats.nba.com/stats/commonteamroster', {
+  axios.get('https://stats.nba.com/stats/commonteamroster/', {
     params: {
       Season: req.parameters.season,
       TeamID: req.parameters.teamId
