@@ -60,9 +60,6 @@ router.get('/', (req, res) => {
     params: {
       Season: req.parameters.season,
       TeamID: req.parameters.teamId
-    },
-    headers: {
-      "User-Agent": "PostmanRuntime/7.13.0"
     }
   })
     .then((response)=>{
