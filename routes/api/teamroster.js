@@ -60,6 +60,9 @@ router.get('/', (req, res) => {
     params: {
       Season: req.parameters.season,
       TeamID: req.parameters.teamId
+    },
+    headers: {
+      'accept-language':'he-IL,he;q=0.8,en-US;q=0.6,en;q=0.4'
     }
   })
     .then((response)=>{
