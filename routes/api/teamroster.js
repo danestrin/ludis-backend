@@ -4,6 +4,20 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
+function RetrievePlayerIds(data)
+{
+  var playerIds = [];
+
+  for (i = 0; i < data.length; i++) {
+    var id = data[i].personId;
+
+    if (id != null) {
+      playerIds.push(id);
+    }
+  }
+
+  console.log(playerIds);
+}
 function GetPositionsFromCode(code)
 {
   var positionCodes = code.split('-');
@@ -27,53 +41,48 @@ function GetPositionsFromCode(code)
   return positions.join(', ');
 }
 
-function OrganizeData(response)
+function OrganizeData(roster)
 {
-  var data = response.resultSets[0].rowSet;
-  var roster = [];
+  var organizedRoster = [];
 
-  for (var i = 0; i < data.length; i++) {
-    var entry = data[i];
+  for (var i = 0; i < roster.length; i++) {
+    var entry = roster[i];
 
     var player = {
-      name: entry[3] == null ? "NOT FOUND" : entry[3],
-      number: entry[4] == null ? "NOT FOUND" : entry[4],
-      position: entry[5] == null ? "NOT FOUND" : GetPositionsFromCode(entry[5]),
-      height: entry[6] == null ? "NOT FOUND" : entry[6],
-      weight: entry[7] == null ? "NOT FOUND" : entry[7],
-      age: entry[9] == null ? "NOT FOUND" : entry[9],
-      school: entry[11] == null ? "NOT FOUND" : entry[11],
-      id: entry[12] == null ? "NOT FOUND" : entry[12]
+      name: entry.firstName == null || entry.lastName == null ? "NOT FOUND" : entry.firstName + " " + entry.lastName,
+      number: entry.jersey == null ? "NOT FOUND" : entry.jersey,
+      position: entry.pos == null ? "NOT FOUND" : GetPositionsFromCode(entry.pos),
+      height: entry.heightFeet == null || entry.heightInches == null ? "NOT FOUND" : entry.heightFeet + "-" + entry.heightInches,
+      weight: entry.weightPounds == null ? "NOT FOUND" : entry.weightPounds,
+      school: entry.collegeName == null ? "NOT FOUND" : entry.collegeName,
+      id: entry.personId == null ? "NOT FOUND" : entry.personId
     }
 
-    roster.push(player);
+    organizedRoster.push(player);
   }
 
-  return roster;
+  return organizedRoster;
 }
 
 // @route   GET api/teamroster
 // @desc    Tests stats.nba.com endpoints
 // @access  Public
 router.get('/', (req, res) => {
-  axios.get('https://stats.nba.com/stats/commonteamroster/', {
-    params: {
-      Season: req.parameters.season,
-      TeamID: req.parameters.teamId
-    },
-    headers: {
-      host: 'stats.nba.com',
-      "cache-control":"max-age=0",
-      connection: 'keep-alive',
-      "accept-encoding" : "Accepflate, sdch",
-      'accept-language':'he-IL,he;q=0.8,en-US;q=0.6,en;q=0.4',
-      'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36'
-    }
+  axios.get('http://data.nba.net/prod/v1/2018/players.json', {
   })
     .then((response)=>{
-      console.log("api/teamroster successful")
-      var roster = OrganizeData(response.data);
-      res.json(roster);
+
+      var players = response.data.league.standard;
+      var roster = [];
+
+      for (i = 0; i < players.length; i++) {
+        if (players[i].teamId == req.teamId) {
+          roster.push(players[i]);
+        }
+      }
+
+      organizedRoster = OrganizeData(roster);
+      res.json(organizedRoster);
     })
     .catch((err)=> {
       console.log(err);

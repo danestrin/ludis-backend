@@ -19,10 +19,7 @@ app.use('/api/test', test);
 
 // test call, returns Houston Rockets roster
 app.use('/api/teamroster', function (req, res, next) {
-    req.parameters = {
-        season: '2018-19',
-        teamId: '1610612745'
-    }
+    req.teamId = '1610612760'
     next();
 }, teamroster);
 
