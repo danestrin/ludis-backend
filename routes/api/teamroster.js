@@ -1,23 +1,7 @@
-// returns a team's roster (players and coaches)
-
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-function RetrievePlayerIds(data)
-{
-  var playerIds = [];
-
-  for (i = 0; i < data.length; i++) {
-    var id = data[i].personId;
-
-    if (id != null) {
-      playerIds.push(id);
-    }
-  }
-
-  console.log(playerIds);
-}
 function GetPositionsFromCode(code)
 {
   var positionCodes = code.split('-');
@@ -65,7 +49,7 @@ function OrganizeData(roster)
 }
 
 // @route   GET api/teamroster
-// @desc    Tests stats.nba.com endpoints
+// @desc    Returns a team's roster
 // @access  Public
 router.get('/', (req, res) => {
   axios.get('http://data.nba.net/prod/v1/2018/players.json', {
@@ -76,7 +60,7 @@ router.get('/', (req, res) => {
       var roster = [];
 
       for (i = 0; i < players.length; i++) {
-        if (players[i].teamId == req.teamId) {
+        if (players[i].teamId == req.query.teamId) {
           roster.push(players[i]);
         }
       }
