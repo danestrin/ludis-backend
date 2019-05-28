@@ -39,7 +39,8 @@ function OrganizeData(roster)
       height: entry.heightFeet == null || entry.heightInches == null ? "NOT FOUND" : entry.heightFeet + "-" + entry.heightInches,
       weight: entry.weightPounds == null ? "NOT FOUND" : entry.weightPounds,
       school: entry.collegeName == null ? "NOT FOUND" : entry.collegeName,
-      id: entry.personId == null ? "NOT FOUND" : entry.personId
+      id: entry.personId == null ? "NOT FOUND" : entry.personId,
+      image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/" + entry.personId + ".png"
     }
 
     organizedRoster.push(player);

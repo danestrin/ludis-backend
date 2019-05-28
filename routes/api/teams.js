@@ -15,7 +15,8 @@ router.get('/', (req, res) => {
 
       for (i = 0; i < teams.length; i++) {
         if (teams[i].isNBAFranchise == true) {
-          nbaTeams.push(teams[i]);
+            teams[i].logo = "https://stats.nba.com/media/img/teams/logos/" + teams[i].tricode + "_logo.svg"
+            nbaTeams.push(teams[i]);;
         }
       }
 
