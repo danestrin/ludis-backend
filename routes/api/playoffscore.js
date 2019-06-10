@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
           },
           vTeam: {
             teamId: data.games[i].vTeam.teamId,
-            triCode: data.games[i].vTeam.tricode,
+            triCode: data.games[i].vTeam.triCode,
             logo: "https://stats.nba.com/media/img/teams/logos/" + data.games[i].vTeam.triCode + "_logo.svg",
             score: data.games[i].vTeam.score,
             series: data.games[i].playoffs.vTeam.seriesWin
