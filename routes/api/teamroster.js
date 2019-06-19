@@ -36,8 +36,8 @@ function OrganizeData(roster)
       name: entry.firstName == null || entry.lastName == null ? "NOT FOUND" : entry.firstName + " " + entry.lastName,
       number: entry.jersey == null ? "NOT FOUND" : entry.jersey,
       position: entry.pos == null ? "NOT FOUND" : GetPositionsFromCode(entry.pos),
-      height: entry.heightFeet == null || entry.heightInches == null ? "NOT FOUND" : entry.heightFeet + "-" + entry.heightInches,
-      weight: entry.weightPounds == null ? "NOT FOUND" : entry.weightPounds,
+      height: entry.heightFeet == null || entry.heightInches == null ? "NOT FOUND" : entry.heightFeet + "' " + entry.heightInches,
+      weight: entry.weightPounds == null ? "NOT FOUND" : entry.weightPounds + " lbs",
       school: entry.collegeName == null ? "NOT FOUND" : entry.collegeName,
       id: entry.personId == null ? "NOT FOUND" : entry.personId,
       image: "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/" + entry.personId + ".png"
