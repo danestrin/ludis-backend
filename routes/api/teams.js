@@ -15,8 +15,9 @@ router.get('/', (req, res) => {
 
       for (i = 0; i < teams.length; i++) {
         if (teams[i].isNBAFranchise == true) {
-            teams[i].logo = "https://stats.nba.com/media/img/teams/logos/" + teams[i].tricode + "_logo.svg"
-            nbaTeams.push(teams[i]);;
+            teams[i].logoSvg = "https://stats.nba.com/media/img/teams/logos/" + teams[i].tricode + "_logo.svg";
+            teams[i].logoPng = req.protocol + '://' + req.headers.host + '/logos/' + teams[i].tricode + '_logo.png';
+            nbaTeams.push(teams[i]);
         }
       }
 

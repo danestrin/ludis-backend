@@ -12,6 +12,9 @@ const app = express();
 
 app.get('/', (req, res) => res.send(''));
 
+// static files
+app.use(express.static('static'));
+
 // Use Routes
 app.use('/api/teamroster', function (req, res, next) {
     next()
