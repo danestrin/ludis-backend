@@ -6,7 +6,7 @@ const express = require('express');
 
 const teamroster = require('./routes/api/teamroster');
 const teams = require('./routes/api/teams');
-const playoffscore = require('./routes/api/playoffscore');
+const score = require('./routes/api/score');
 
 const app = express();
 
@@ -24,9 +24,9 @@ app.use('/api/teams', function(req, res, next) {
     next()
 }, teams);
 
-app.use('/api/playoffscore', function(req, res, next) {
+app.use('/api/score', function(req, res, next) {
     next()
-}, playoffscore);
+}, score);
 
 const port = process.env.PORT || 5000;
 
