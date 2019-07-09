@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
       var games = [];
 
       for (var i = 0; i < data.games.length; i++) {
-        if (data.games[i].leagueName == "standard") {
+        if (data.games[i].leagueName == "standard" || data.games[i].leagueName == null) {
           if (data.games[i].playoffs == null) {
             var isPlayoffGame = false;
           } else {
