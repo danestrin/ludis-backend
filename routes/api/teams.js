@@ -2,11 +2,14 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
+var date = new Date();
+var season = date.getFullYear();
+
 // @route   GET api/teams
 // @desc    Returns all NBA teams
 // @access  Public
 router.get('/', (req, res) => {
-  axios.get('http://data.nba.net/prod/v2/2018/teams.json', {
+  axios.get('http://data.nba.net/prod/v2/' + season + '/teams.json', {
   })
     .then((response)=>{
 

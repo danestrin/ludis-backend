@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
+var date = new Date();
+var season = date.getFullYear();
+
 function GetPositionsFromCode(code)
 {
   var positionCodes = code.split('-');
@@ -53,7 +56,7 @@ function OrganizeData(roster)
 // @desc    Returns a team's roster
 // @access  Public
 router.get('/', (req, res) => {
-  axios.get('http://data.nba.net/prod/v1/2018/players.json', {
+  axios.get('http://data.nba.net/prod/v1/' + season + '/players.json', {
   })
     .then((response)=>{
 
