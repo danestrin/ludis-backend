@@ -63,7 +63,7 @@ router.get('/', (req, res) => {
         var roster = [];
   
         for (i = 0; i < players.length; i++) {
-          if (players[i].teamId === req.query.teamID) {
+          if (players[i].teamId === req.query.teamId) {
             roster.push(players[i]);
           }
         }
