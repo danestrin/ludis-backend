@@ -2,9 +2,6 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-var date = new Date();
-var season = date.getFullYear();
-
 function GetPositionsFromCode(code)
 {
   var positionCodes = code.split('-');
@@ -56,25 +53,28 @@ function OrganizeData(roster)
 // @desc    Returns a team's roster
 // @access  Public
 router.get('/', (req, res) => {
-  axios.get('http://data.nba.net/prod/v1/' + season + '/players.json', {
-  })
-    .then((response)=>{
+  axios.get('http://data.nba.net/10s/prod/v1/today.json', {}).then((response) => {
+    var season = response.data.teamSitesOnly.rosterYear;
 
-      var players = response.data.league.standard;
-      var roster = [];
-
-      for (i = 0; i < players.length; i++) {
-        if (players[i].teamId == req.query.teamId) {
-          roster.push(players[i]);
-        }
-      }
-
-      organizedRoster = OrganizeData(roster);
-      res.json(organizedRoster);
+    axios.get('http://data.nba.net/prod/v1/' + season + '/players.json', {
     })
-    .catch((err)=> {
-      console.log(err);
-      res.statusCode = 500;
+      .then((response)=>{
+        var players = response.data.league.standard;
+        var roster = [];
+  
+        for (i = 0; i < players.length; i++) {
+          if (players[i].teamId === req.query.teamID) {
+            roster.push(players[i]);
+          }
+        }
+  
+        organizedRoster = OrganizeData(roster);
+        res.json(organizedRoster);
+      })
+      .catch((err)=> {
+        console.log(err);
+        res.statusCode = 500;
+      })
     })
 });
 
